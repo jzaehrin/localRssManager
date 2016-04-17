@@ -60,7 +60,7 @@
 
                     var readedList = localStorage.getItem(def.rssHash);
 
-                    console.log(new RSSNew(def.rssHash, link.crypt(), title, description, link, date, false, $("#" + id)));
+                    console.log(new RSSNew(def.rssHash, link.crypt(), title, description, link, date, $("#" + id)));
 
                     /*
                     s += '<li><div class="itemTitle"><a href="' + itm.channel.item.link + '" target="' + def.TitleLinkTarget + '" >' + itm.channel.item.title + '</a></div>';

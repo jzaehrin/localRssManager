@@ -10,7 +10,7 @@ RSSManager = function(id, name, url, $btnContainer, $rssContainer, options) {
 
     var defaultOptions = {
         count: "5",
-        limit: "100"
+        limit: "200"
     };
 
     this.options = $.extend({},defaultOptions, options);
@@ -23,7 +23,7 @@ RSSManager.prototype = {
         var self = this;
 
         var $btn = $('<button/>',{
-            class: 'btn',
+            class: 'btn btnRss',
             id: this.id
         }).text(this.name);
 
@@ -36,7 +36,8 @@ RSSManager.prototype = {
                 DescCharacterLimit: self.options['limit'],
                 TitleLinkTarget:'_blank',
                 DateFormat:'DD/MM/YYYY',
-                DateFormatLang:'en'
+                DateFormatLang:'en',
+                rssHash: self.id
             });
         });
 

@@ -2,6 +2,11 @@
     margin: 0;
     padding: 0;
 }
+.btnRss{
+    margin:5px;
+    padding:2px;
+    float:left;
+}
 
 
 /* feedEK test */
