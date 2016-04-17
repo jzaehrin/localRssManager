@@ -15,7 +15,6 @@ $(document).ready(function(){
         if(rssfeed === null){
             rssfeed = [];
         }
-        
         rssfeed.push([url.crypt(), name, url]);
 
         localStorage.setItem('rssfeed', JSON.stringify(rssfeed));
@@ -27,13 +26,29 @@ $(document).ready(function(){
     $('#showAddRssForm').click(function(){
        if($(this).hasClass('open')){
            $(this).removeClass('open');
-           $('#addRssFormContainer').css('display', 'none');
+           $('#addRssFormContainer').removeClass('openAddRssForm');
            $(this).text('+');
        }else{
            $(this).addClass('open');
-           $('#addRssFormContainer').css('display', 'block');
+           $('#addRssFormContainer').addClass('openAddRssForm');
            $(this).text('-');
        }
     });
-});
+    /*$('#showAddRssForm').click(function(){
+      console.log($(this));
 
+      if($(this).hasClass("open")) {
+        $(this).removeClass("open");
+        $(this).parent().find("#addRssFormContainer").animate({'height': "auto"},200);
+        $(this).text("+");
+      } else {
+        $(this).addClass("open");
+        $(this).parent().find("#addRssFormContainer").animate({'height': "0"},200);
+        $(this).text("-");
+      }*/
+      // if(!$(this).hasClass('open')){
+          //  $(this).addClass('open');
+          //  $('#addRssFormContainer').animate({'height': "auto", 'display': 'block'},200);
+          //  $(this).text('-');
+      //  }
+});

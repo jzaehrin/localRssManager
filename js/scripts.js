@@ -5,7 +5,7 @@ function loadButton($container){
 
     console.log(rssfeed);
     $(rssfeed).each( function( i, item ) {
-        var obj = new RSSManager(item[0], item[1], item[2], $container, $container, {});
+        var obj = new RSSManager(item[0], item[1], item[2], $container, $("#rssContainer"), {});
         console.log(obj);
     });
 }

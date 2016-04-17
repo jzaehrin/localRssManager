@@ -79,12 +79,11 @@ RSSNew.prototype = {
 
         this.$article.append($('<h1/>',{
             class: 'title'
-        })
-        .text(this.title))
-        .append($('<p/>', {
+        }).text(this.title));
+        this.$article.append($('<p/>', {
             class: 'content'
         }).text(this.description))
-        .append($('<a/>', {
+        this.$article.append($('<a/>', {
             class: 'link',
             href: this.link
         }).text('voir plus...'));
