@@ -14,7 +14,7 @@
             TitleLinkTarget: "_blank",
             DateFormat: "",
             DateFormatLang:"en",
-            googleApi: false,
+            googleApi: true,
             rssHash: ""
         }, opt);
         
@@ -28,7 +28,7 @@
         var url = "https://query.yahooapis.com/v1/public/yql?q=" + encodeURIComponent(YQLstr) + "&format=json&diagnostics=false&callback=?";
 
         if(def.googleApi){
-            url = "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num="+def.MaxCount+"&q=" + def.FeedUrl;
+            url = "http://ajax.googleapis.com/ajax/services/feed/load?v=2.0&q="+def.FeedUrl+"&num="+def.MaxCount;
         }
 
         $.ajax({
@@ -61,37 +61,7 @@
                     var readedList = localStorage.getItem(def.rssHash);
 
                     console.log(new RSSNew(def.rssHash, link.crypt(), title, description, link, date, $("#" + id)));
-
-                    /*
-                    s += '<li><div class="itemTitle"><a href="' + itm.channel.item.link + '" target="' + def.TitleLinkTarget + '" >' + itm.channel.item.title + '</a></div>';
-                    
-                    if (def.ShowPubDate){
-                        dt = new Date(itm.channel.item.pubDate);
-                        s += '<div class="itemDate">';
-                        if ($.trim(def.DateFormat).length > 0) {
-                            try {
-                                moment.lang(def.DateFormatLang);
-                                s += moment(dt).format(def.DateFormat);
-                            }
-                            catch (e){s += dt.toLocaleDateString();}                            
-                        }
-                        else {
-                            s += dt.toLocaleDateString();
-                        }
-                        s += '</div>';
-                    }
-                    if (def.ShowDesc) {
-                        s += '<div class="itemContent">';
-                         if (def.DescCharacterLimit > 0 && itm.channel.item.description.length > def.DescCharacterLimit) {
-                            s += itm.channel.item.description.substring(0, def.DescCharacterLimit) + '...';
-                        }
-                        else {
-                            s += itm.channel.item.description;
-                         }
-                         s += '</div>';
-                    }*/
                 });
-                //$("#" + id).append('<ul class="feedEkList">' + s + '</ul>');
             }
         });
     };

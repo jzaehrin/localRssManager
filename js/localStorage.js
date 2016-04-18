@@ -60,7 +60,6 @@ $(document).ready(function(){
         localStorage.setItem('rssSettings', JSON.stringify(rssSettings));
 
         loadButton($('#btnContainer'));
-        this.reset();
         closeSettingsForm($('#showAddRssForm'));
     });
     $('#showAddRssForm').click(function(){

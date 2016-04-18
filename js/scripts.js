@@ -15,4 +15,16 @@ function loadButton($container){
 }
 $(document).ready(function(){
     loadButton($('#btnContainer'));
+
+    settings = JSON.parse(localStorage.getItem('rssSettings'));
+
+    if(settings == null) {
+        settings = {
+            'count': 5,
+            'limit': 200,
+        }
+    }
+    $('#nbArticle').attr('value',
+        settings['count']);
+    $('#descLength').attr('value',settings['limit']);
 });
