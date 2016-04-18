@@ -1,10 +1,30 @@
-
+function closeAddRssForm(obj){
+    $(obj).removeClass('open');
+    $('#addRssFormContainer').slideUp();
+    $(obj).find('#add').attr('src', "img/signs.svg");
+}
+function openAddRssForm(obj){
+    $(obj).addClass('open');
+    $('#addRssFormContainer').slideDown();
+    $(obj).find('#add').attr('src', "img/line.svg");
+}
+function closeSettingsForm(obj){
+    $(obj).removeClass('open');
+    $('#settingsFormContainer').slideUp();
+}
+function openSettingsForm(obj){
+    $(obj).addClass('open');
+    $('#settingsFormContainer').slideDown();
+}
 $(document).ready(function(){
+    $('#addRssFormContainer').slideUp();
+    $('#settingsFormContainer').slideUp();
+
     $('#addRssForm').submit(function (e){
         e.preventDefault();
 
-        name = this.elements['Name'].value;
-        url = this.elements['URL'].value;
+        var name = this.elements['Name'].value;
+        var url = this.elements['URL'].value;
 
         if(url == "" || name == ""){
             return false;
@@ -22,33 +42,42 @@ $(document).ready(function(){
         console.log(rssfeed);
 
         loadButton($('#btnContainer'));
+        this.reset();
+        closeAddRssForm($('#showAddRssForm'));
+    });
+    $('#settingsForm').submit(function (e){
+        e.preventDefault();
+
+        var nbArticle = this.elements['nbArticle'].value;
+        var descLength = this.elements['descLength'].value;
+
+        if(descLength == "" || descLength == ""){
+            return false;
+        }
+
+        var rssSettings = {'count' : nbArticle, 'limit' : descLength};
+
+        localStorage.setItem('rssSettings', JSON.stringify(rssSettings));
+
+        loadButton($('#btnContainer'));
+        this.reset();
+        closeSettingsForm($('#showAddRssForm'));
     });
     $('#showAddRssForm').click(function(){
        if($(this).hasClass('open')){
-           $(this).removeClass('open');
-           $('#addRssFormContainer').removeClass('openAddRssForm');
-           $(this).text('+');
+           closeAddRssForm(this);
        }else{
-           $(this).addClass('open');
-           $('#addRssFormContainer').addClass('openAddRssForm');
-           $(this).text('-');
+           openAddRssForm(this);
+           closeSettingsForm($('#showSettingsForm'));
        }
     });
-    /*$('#showAddRssForm').click(function(){
-      console.log($(this));
-
-      if($(this).hasClass("open")) {
-        $(this).removeClass("open");
-        $(this).parent().find("#addRssFormContainer").animate({'height': "auto"},200);
-        $(this).text("+");
-      } else {
-        $(this).addClass("open");
-        $(this).parent().find("#addRssFormContainer").animate({'height': "0"},200);
-        $(this).text("-");
-      }*/
-      // if(!$(this).hasClass('open')){
-          //  $(this).addClass('open');
-          //  $('#addRssFormContainer').animate({'height': "auto", 'display': 'block'},200);
-          //  $(this).text('-');
-      //  }
+    $('#showSettingsForm').click(function(){
+       if($(this).hasClass('open')){
+           closeSettingsForm(this);
+       }
+       else{
+           openSettingsForm(this);
+           closeAddRssForm($('#showAddRssForm'));
+       }
+    });
 });

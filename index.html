@@ -2,6 +2,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/flat-ui.css">
     <script   src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
     <script src="js/misc.js"></script>
     <script src="js/FeedEk.js"></script>
@@ -14,16 +15,29 @@
     <title>Fully local rss manager</title>
 </head>
 <body>
-    <div class="col-xs-2" id="menu">
-      <div id="addRssContainer">
-            <button type="button" class="btn" id="showAddRssForm">+</button>
+    <div class="container-fluid">
+    <div class="col-xs-3" id="menu">
+      <div id="formContainer">
+            <button type="button" class="btn" id="showAddRssForm"><img id="add" src="img/signs.svg"/></button>
+            <button type="button" class="btn" id="showSettingsForm"><img id="gear" src="img/gear.svg"/></button>
             <div id="addRssFormContainer">
                 <form id="addRssForm" action="#">
+                    <h2>Add rssfeed</h2>
                     <label for="Name">Name</label>
                     <input type="text" name="Name">
                     <label for="URL">URL</label>
                     <input type="text" name="URL"/>
-                    <input type="submit" class="btn" value="add">
+                    <input type="submit" class="btn submitRss" value="Add">
+                </form>
+            </div>
+            <div id="settingsFormContainer">
+                <form id="settingsForm" action="#">
+                    <h2>Settings</h2>
+                    <label for="nbArticle">Number of article</label>
+                    <input type="number" name="nbArticle">
+                    <label for="descLength">Description length</label>
+                    <input type="number" name="descLength"/>
+                    <input type="submit" class="btn submitSettings" value="Save">
                 </form>
             </div>
       </div>
@@ -31,8 +45,9 @@
             <button type="button" class="btn btnRss" id="stackoverflow">Stack over flow</button>
       </div>
     </div>
-    <div class="col-xs-6" id="rssContainer">
+    <div class="col-xs-9" id="rssContainer">
 
+    </div>
     </div>
 </body>
 </html>
