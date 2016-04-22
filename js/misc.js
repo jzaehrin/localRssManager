@@ -7,12 +7,3 @@ Object.getPrototypeOf(localStorage).isPresent = function(index){
     }
     return true;
 };
-
-function removeClicked(){
-    var $buttons = $('#btnContainer').find('button');
-    console.log($buttons);
-
-    $.each($buttons, function(key, obj){
-        $(obj).removeClass('clicked');
-    });
-}

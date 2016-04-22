@@ -17,8 +17,6 @@
             googleApi: false,
             rssHash: ""
         }, opt);
-
-        var App = window.App;
         
         var id = $(this).attr("id"), i, s = "", dt;
         $("#" + id).empty();
@@ -36,12 +34,20 @@
         $.ajax({
             url: url,
             dataType: "json",
+            timeout: 120,
+                error: function(e){
+                    $('#' + id).empty();
+                    $('#' + id).append($('<p/>', {
+                        class : 'alert alert-danger',
+                    }).text("Timeout : Veuillez verifier votre connection internet."));
+            },
             success: function (data) {
                 $("#" + id).empty();
                 if (!(data.query.results.rss instanceof Array)) {
                     data.query.results.rss = [data.query.results.rss];
                 }
                 $.each(data.query.results.rss, function (e, itm) {
+                    /* Getting information from result */
                     var title = itm.channel.item.title;
                     var description = itm.channel.item.description;
                     if (def.DescCharacterLimit > 0 && itm.channel.item.description.length > def.DescCharacterLimit) {
@@ -60,7 +66,8 @@
                         date = date.toLocaleDateString();
                     }
 
-                    console.info(new RSSNew(def.rssHash, link.crypt(), title, description, link, date, $("#" + id)));
+                    /* Generate the News */
+                    console.info(new RSSNews(def.rssHash, title, description, link, date, $("#" + id)));
                 });
             }
         });

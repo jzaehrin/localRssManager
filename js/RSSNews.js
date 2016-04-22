@@ -1,8 +1,21 @@
-RSSNew = function(rssHash, id, title, description, link, date,$container) {
+/** Jonathan Zaehringer
+ * Object RSS New
+ * Use for generate new from the RSS and interact with it for mark the new is readed or not.
+ *
+ * @param rssHash String; URL Hashed of the RSS
+ * @param title String; New's title
+ * @param description String; New's content
+ * @param link String; New's link
+ * @param date Date; New's date
+ * @param $container Object; Div for contain the new
+ *
+ */
+RSSNews = function(rssHash, title, description, link, date, $container) {
+    this.App = window.App;
 
     this.rssHash = rssHash;
 
-    this.id = id;
+    this.id = link.crypt();
 
     this.title = title;
 
@@ -13,7 +26,7 @@ RSSNew = function(rssHash, id, title, description, link, date,$container) {
     this.init($container);
 }
 
-RSSNew.prototype = {
+RSSNews.prototype = {
     init: function($container){
         var self = this;
         this.readed = this.check_readed();
@@ -32,46 +45,31 @@ RSSNew.prototype = {
             this.display_all();
         }
 
+        /* reading flag */
         this.$article.find('.readStatus').click(function(){
             console.log(this);
-            var readed_list = JSON.parse(localStorage.getItem(self.rssHash));
-            console.log(readed_list);
+            console.info(readed_list);
 
             if(self.readed){
                 self.readed = false;
-                readed_list.splice(self.index, 1);
-                localStorage.setItem(self.rssHash, JSON.stringify(readed_list));
+                self.App.localStorage.remove_value_in(self.rssHash, self.id);
                 self.display_all();
             }
             else{
                 self.readed = true;
-                self.index = readed_list.length;
-                readed_list[self.index] = self.id;
-                localStorage.setItem(self.rssHash, JSON.stringify(readed_list));
+                self.App.localStorage.add_value_in(self.rssHash, self.id);
                 self.display_small();
             }
-
         });
     },
 
     check_readed: function(){
-        var readed_list = JSON.parse(localStorage.getItem(this.rssHash));
-        console.log(this.rssHash);
-        console.log(readed_list);
+        console.info(this.App.localStorage.get_item(this.rssHash));
 
-        if(readed_list == null){
-            localStorage.setItem(this.rssHash, JSON.stringify([]));
-            return false;
-        }
-
-        if((this.index = $.inArray(this.link.crypt(), readed_list)) >= 0){
-            return true;
-        }
-
-        return false;
-
+        return this.App.localStorage.value_is_present(this.rssHash, this.id);
     },
 
+    /* Initial display */
     display_init: function(){
         this.$article.empty();
 
@@ -80,6 +78,7 @@ RSSNew.prototype = {
         );
 
     },
+    /* Readed News */
     display_small: function(){
         this.$article.addClass('readed');
 
@@ -88,6 +87,7 @@ RSSNew.prototype = {
         this.$article.find('.clear').remove();
     },
 
+    /* Total news */
     display_all: function(){
         this.$article.removeClass('readed');
 
@@ -107,4 +107,4 @@ RSSNew.prototype = {
     }
 }
 
-RSSNew.prototype.constructor = RSSNew;
+RSSNews.prototype.constructor = RSSNew;

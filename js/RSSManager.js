@@ -1,6 +1,15 @@
-var RSSManager = function(id, name, url, options) {
+/** Jonathan Zaehringer
+ * Object RSS Manager
+ * Use for generate button form localStorage and interaction with it
+ *
+ * @param name String; Name gived for the RSS
+ * @param url String; URL of the RSS
+ * @param options Object; loading options
+ *
+ */
+var RSSManager = function(name, url, options) {
 
-    this.id = id;
+    this.id = url.crypt();
 
     this.name = name;
 
@@ -32,7 +41,7 @@ RSSManager.prototype = {
         }));
 
         this.$btn.click(function(){
-            removeClicked();
+            self.App.removeClickedStatus();
             $(this).addClass('clicked');
             self.App.$container.rss.FeedEk({
                 FeedUrl : self.url,

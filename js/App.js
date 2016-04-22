@@ -1,3 +1,9 @@
+/** Jonathan Zaehringer
+ * Singleton of the localRssManager. Contain the initialisation of the App. Get all necessary DOM Object for all Object.
+ * Contain default configuration and usefull function
+ *
+ * Don't forgot the initalisation after the loading of the DOM.
+ */
 App = {
     init: function(JQuery) {
         if (!this.singleton) {
@@ -6,6 +12,7 @@ App = {
 
             this.initEvent();
 
+            // Initialisation of from at close
             this.$form.addRss.container.slideUp();
             this.$form.settings.container.slideUp();
 
@@ -16,6 +23,7 @@ App = {
     },
     $: null,
     singleton: false,
+    /* Form for settings and Adding rss */
     $form: {
         addRss:{
             button: null,
@@ -31,11 +39,13 @@ App = {
         }
 
     },
+    /* container for the application */
     $container: {
         button: null,
         rss: null,
     },
     config: {
+        /* configuration for storage and default value for FeedEK */
         storage: {
             feed: 'rssFeed',
             settings: 'rssSettings',
@@ -46,6 +56,7 @@ App = {
 
         }
     },
+    /* Initialisation of vars */
     initVars: function(){
         this.$form.addRss = this.$.extend({}, this.$form.addRss, { button: this.$('#addRssFormButton'), container: this.$('#addRssFormContainer')});
 
@@ -53,10 +64,11 @@ App = {
 
         this.$container = this.$.extend({}, this.$container, { button: this.$('#btnContainer'), rss: this.$('#rssContainer')})
     },
+    /* Initialisation of event for form of settings and adding rss */
     initEvent: function(){
         var self = this;
 
-        //Initialisation
+        /* Adding RSS form */
         this.$form.addRss.container.find('form').submit(function (e){
             var addRss = self.$form.addRss;
             e.preventDefault();
@@ -68,13 +80,24 @@ App = {
                 return false;
             }
 
-            self.localStorage.add_value_in(self.config.storage.feed, [url.crypt(), name, url]);
+            self.localStorage.add_value_in(self.config.storage.feed, [name, url]);
 
             self.loadButtons();
             this.reset();
             self.FormAction.closeForm(addRss.button, addRss.container, addRss.imgOff);
         });
 
+        this.$form.addRss.button.click(function(){
+            var App = window.App;
+            if($(this).hasClass('open')){
+                App.FormAction.closeForm(this, App.$form.addRss.container, App.$form.addRss.imgOff);
+            }else{
+                App.FormAction.closeAllForm(self.$form);
+                App.FormAction.openForm(this, App.$form.addRss.container, App.$form.addRss.imgOn);
+            }
+        });
+
+        /* settings form */
         this.$form.settings.container.find('form').submit(function (e){
             var settings = self.$form.settings;
             e.preventDefault();
@@ -88,18 +111,8 @@ App = {
 
             this.localStorage.update_item(this.config.storage.setting, {'count' : nbArticle, 'limit' : descLength});
 
-            loadButton(this.$container.button);
+            this.loadButtons();
             this.FormAction.closeForm(settings.button, settings.container, settings.imgOff);
-        });
-
-        this.$form.addRss.button.click(function(){
-            var App = window.App;
-            if($(this).hasClass('open')){
-                App.FormAction.closeForm(this, App.$form.addRss.container, App.$form.addRss.imgOff);
-            }else{
-                App.FormAction.closeAllForm(self.$form);
-                App.FormAction.openForm(this, App.$form.addRss.container, App.$form.addRss.imgOn);
-            }
         });
 
         this.$form.settings.button.click(function(){
@@ -114,6 +127,7 @@ App = {
             }
         });
     },
+    /* custom localStorage function */
     localStorage: {
         get_item: function(index){
             if(!localStorage.isPresent(index)){
@@ -168,8 +182,20 @@ App = {
             this.update_item(index, table);
 
             return true;
+        },
+        value_is_present: function(index, value){
+            if(!localStorage.isPresent(index)){
+                return false;
+            }
+
+            if(($.inArray(value, this.get_item(index))) < 0){
+                return false;
+            }
+
+            return true;
         }
     },
+    /* form action function */
     FormAction: {
         closeForm: function(obj, form, img){
             $(obj).removeClass('open');
@@ -206,6 +232,7 @@ App = {
             });
         }
     },
+    /* loading/reloading of rss buttons */
     loadButtons: function(){
         console.log(this);
         this.$container.button.empty();
@@ -224,10 +251,19 @@ App = {
 
         console.info(feeds);
         this.$(feeds).each( function( i, item ) {
-            var obj = new RSSManager(item[0], item[1], item[2], settings);
+            var obj = new RSSManager(item[0], item[1], settings);
             console.info(obj);
+        });
+    },
+    removeClickedStatus: function() {
+        var $buttons = this.$container.button.find('button');
+        console.info($buttons);
+
+        $buttons.each(function () {
+            $(this).removeClass('clicked');
         });
     }
 }
+
 
 
