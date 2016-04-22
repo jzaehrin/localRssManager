@@ -14,9 +14,11 @@
             TitleLinkTarget: "_blank",
             DateFormat: "",
             DateFormatLang:"en",
-            googleApi: true,
+            googleApi: false,
             rssHash: ""
         }, opt);
+
+        var App = window.App;
         
         var id = $(this).attr("id"), i, s = "", dt;
         $("#" + id).empty();
@@ -58,9 +60,7 @@
                         date = date.toLocaleDateString();
                     }
 
-                    var readedList = localStorage.getItem(def.rssHash);
-
-                    console.log(new RSSNew(def.rssHash, link.crypt(), title, description, link, date, $("#" + id)));
+                    console.info(new RSSNew(def.rssHash, link.crypt(), title, description, link, date, $("#" + id)));
                 });
             }
         });

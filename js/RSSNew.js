@@ -85,6 +85,7 @@ RSSNew.prototype = {
 
         this.$article.find('.content').remove();
         this.$article.find('.link').remove();
+        this.$article.find('.clear').remove();
     },
 
     display_all: function(){
@@ -99,6 +100,9 @@ RSSNew.prototype = {
             target: "_blank"
         }).text('voir plus...').click(function(e){
             e.stopPropagation();
+        }));
+        this.$article.append($('<div/>', {
+            class: 'clear'
         }));
     }
 }

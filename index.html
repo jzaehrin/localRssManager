@@ -7,31 +7,31 @@
     <script src="js/misc.js"></script>
     <script src="js/FeedEk.js"></script>
     <script src="js/moment.js"></script>
-    <script src="js/rssManager.js"></script>
-    <script src="js/rssNew.js"></script>
+    <script src="js/RSSManager.js"></script>
+    <script src="js/RSSNew.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/scripts.js"></script>
-    <script src="js/localStorage.js"></script>
+    <script src="js/App.js"></script>
     <title>Fully local rss manager</title>
 </head>
 <body>
     <div class="container-fluid">
     <div class="col-xs-3" id="menu">
       <div id="formContainer">
-            <button type="button" class="btn" id="showAddRssForm"><img id="add" src="img/signs.svg"/></button>
-            <button type="button" class="btn" id="showSettingsForm"><img id="gear" src="img/gear.svg"/></button>
+            <button type="button" class="btn" id="addRssFormButton"><img class="image" src="img/signs.svg"/></button>
+            <button type="button" class="btn" id="SettingsFormButton"><img class="image" src="img/gear.svg"/></button>
             <div id="addRssFormContainer">
                 <form id="addRssForm" action="#">
                     <h2>Add rssfeed</h2>
                     <label for="Name">Name</label>
-                    <input type="text" name="Name">
+                    <input id="Name" type="text" name="Name">
                     <label for="URL">URL</label>
-                    <input type="text" name="URL"/>
+                    <input id="URL" type="text" name="URL"/>
                     <input type="submit" class="btn submitRss" value="Add">
                 </form>
             </div>
-            <div id="settingsFormContainer">
-                <form id="settingsForm" action="#">
+            <div id="SettingsFormContainer">
+                <form id="SettingsForm" action="#">
                     <h2>Settings</h2>
                     <label for="nbArticle">Number of article</label>
                     <input id="nbArticle" type="number" name="nbArticle">

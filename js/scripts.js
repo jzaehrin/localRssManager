@@ -1,30 +1,11 @@
-function loadButton($container){
-    $container.empty();
-
-    var rssfeed = JSON.parse(localStorage.getItem('rssfeed'));
-    var rssSettings = JSON.parse(localStorage.getItem('rssSettings'));
-
-    if(rssSettings == null){
-        rssSettings = {};
-    }
-    console.log(rssfeed);
-    $(rssfeed).each( function( i, item ) {
-        var obj = new RSSManager(item[0], item[1], item[2], $container, $("#rssContainer"), rssSettings);
-        console.log(obj);
-    });
-}
 $(document).ready(function(){
-    loadButton($('#btnContainer'));
+    App.init($);
 
-    settings = JSON.parse(localStorage.getItem('rssSettings'));
+    settings = App.localStorage.get_item(App.config.storage.settings);
 
-    if(settings == null) {
-        settings = {
-            'count': 5,
-            'limit': 200,
-        }
+    if(settings == false) {
+        settings = App.config.storage.defaultSettings;
     }
-    $('#nbArticle').attr('value',
-        settings['count']);
-    $('#descLength').attr('value',settings['limit']);
+    App.$form.settings.container.find('#nbArticle').attr('value', settings['count']);
+    App.$form.settings.container.find('#descLength').attr('value', settings['limit']);
 });
