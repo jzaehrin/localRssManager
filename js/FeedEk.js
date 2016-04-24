@@ -34,13 +34,13 @@
         $.ajax({
             url: url,
             dataType: "json",
-            timeout: 120,
+            /*timeout: 120,
                 error: function(e){
                     $('#' + id).empty();
                     $('#' + id).append($('<p/>', {
                         class : 'alert alert-danger',
                     }).text("Timeout : Veuillez verifier votre connection internet."));
-            },
+            },*/
             success: function (data) {
                 $("#" + id).empty();
                 if (!(data.query.results.rss instanceof Array)) {

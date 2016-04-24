@@ -47,9 +47,6 @@ RSSNews.prototype = {
 
         /* reading flag */
         this.$article.find('.readStatus').click(function(){
-            console.log(this);
-            console.info(readed_list);
-
             if(self.readed){
                 self.readed = false;
                 self.App.localStorage.remove_value_in(self.rssHash, self.id);
@@ -107,4 +104,4 @@ RSSNews.prototype = {
     }
 }
 
-RSSNews.prototype.constructor = RSSNew;
+RSSNews.prototype.constructor = RSSNews;

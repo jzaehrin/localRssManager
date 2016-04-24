@@ -93,6 +93,7 @@ App = {
                 App.FormAction.closeForm(this, App.$form.addRss.container, App.$form.addRss.imgOff);
             }else{
                 App.FormAction.closeAllForm(self.$form);
+                App.FormAction.hideDeleteRssButton(App.$container.button.find('button'));
                 App.FormAction.openForm(this, App.$form.addRss.container, App.$form.addRss.imgOn);
             }
         });
@@ -109,21 +110,20 @@ App = {
                 return false;
             }
 
-            this.localStorage.update_item(this.config.storage.setting, {'count' : nbArticle, 'limit' : descLength});
+            self.localStorage.update_item(self.config.storage.settings, {'count' : nbArticle, 'limit' : descLength});
 
-            this.loadButtons();
-            this.FormAction.closeForm(settings.button, settings.container, settings.imgOff);
+            self.loadButtons();
+            self.FormAction.closeForm(settings.button, settings.container, settings.imgOff);
         });
 
         this.$form.settings.button.click(function(){
-            var App = window.App;
             if($(this).hasClass('open')){
-                App.FormAction.closeForm(this, App.$form.settings.container, App.$form.settings.imgOff);
-                App.FormAction.hideDeleteRssButton(App.$container.button.find('button'));
+                self.FormAction.closeForm(this, self.$form.settings.container, self.$form.settings.imgOff);
+                self.FormAction.hideDeleteRssButton(self.$container.button.find('button'));
             }else{
-                App.FormAction.closeAllForm(self.$form);
-                App.FormAction.openForm(this, App.$form.settings.container, App.$form.settings.imgOn);
-                App.FormAction.showDeleteRssButton(App.$container.button.find('button'));
+                self.FormAction.closeAllForm(self.$form);
+                self.FormAction.openForm(this, self.$form.settings.container, self.$form.settings.imgOn);
+                self.FormAction.showDeleteRssButton(self.$container.button.find('button'));
             }
         });
     },
