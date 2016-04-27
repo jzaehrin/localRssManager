@@ -1,0 +1,62 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/menu.css">
+    <link rel="stylesheet" type="text/css" href="css/news.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto|Lato' rel='stylesheet' type='text/css'>
+
+    <!-- *Locale library* <link rel="stylesheet" type="text/css" href="css/flat-ui.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script src="js/jquery-1.12.3.js"></script>
+    <script src="js/bootstrap.js"></script>-->
+
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="js/misc.js"></script>
+    <script src="js/FeedEk.js"></script>
+    <script src="js/moment-with-locales.min.js"></script>
+    <script src="js/RSSManager.js"></script>
+    <script src="js/RSSNews.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/App.js"></script>
+    <title>Fully local rss manager</title>
+</head>
+<body>
+    <div class="container-fluid">
+    <div class="col-xs-3" id="menu">
+      <div id="formContainer">
+            <button type="button" class="btn" id="addRssFormButton"><img class="image" src="img/signs.svg"/></button>
+            <button type="button" class="btn" id="SettingsFormButton"><img class="image" src="img/gear.svg"/></button>
+            <div id="addRssFormContainer">
+                <form id="addRssForm" action="#">
+                    <h2>Add rssfeed</h2>
+                    <label for="Name">Name</label>
+                    <input id="Name" type="text" name="Name">
+                    <label for="URL">URL</label>
+                    <input id="URL" type="text" name="URL"/>
+                    <input type="submit" class="btn submitRss" value="Add">
+                </form>
+            </div>
+            <div id="SettingsFormContainer">
+                <form id="SettingsForm" action="#">
+                    <h2>Settings</h2>
+                    <label for="nbArticle">Number of article</label>
+                    <input id="nbArticle" type="number" name="nbArticle">
+                    <label for="descLength">Description length</label>
+                    <input id="descLength" type="number" name="descLength"/>
+                    <input type="submit" class="btn submitSettings" value="Save">
+                </form>
+            </div>
+      </div>
+      <div id="btnContainer">
+            <button type="button" class="btn btnRss" id="stackoverflow">Stack over flow</button>
+      </div>
+    </div>
+    <div class="col-xs-9" id="rssContainer">
+
+    </div>
+    </div>
+</body>
+</html>

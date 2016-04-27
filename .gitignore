@@ -1,2 +1,5 @@
-.idea*
-prepros*
+jquery*
+.idea
+bootstrap*
+lien.txt
+prepros.cfg
