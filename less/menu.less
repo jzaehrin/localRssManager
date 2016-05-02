@@ -1,5 +1,12 @@
 @import "partials/_color";
 
+.formButton(){
+  font-size: 20px;
+  padding: 0px;
+  width: 40px;
+  height: 40px
+}
+
 #menu {
   padding: 15px;
   background-color: @background;
@@ -38,11 +45,10 @@
   /* Settings */
 
   #SettingsFormButton{
-    height: 40px;
-    width: 40px;
+    .formButton();
     float: right;
-    padding:0px;
     background-color: @settings_form;
+    font-weight: bold;
   }
 
   #settingsForm {
@@ -54,11 +60,8 @@
   /* Adding RSS */
 
   #AddRssFormButton {
+    .formButton();
     background-color: @add_form;
-    font-size: 20px;
-    padding: 0px;
-    width: 40px;
-    height: 40px;
     font-weight: bold;
   }
 
