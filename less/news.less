@@ -1,0 +1,51 @@
+@import "partials/_color";
+
+#loader{
+  margin-top: 200px;
+  margin-left: calc(~"50% - 100px");
+}
+
+.clear{
+  clear: both;
+}
+
+/* RSS Container */
+
+#rssContainer {
+
+  .alert{
+    margin-top:5px;
+  }
+
+  .article {
+    border-bottom: 1px solid @news_border;
+    background-color: @background;
+    padding: 15px;
+
+    h1.title {
+      font: inherit;
+      font: 22px;
+      font-weight: bold;
+      margin: 0 auto;
+
+      p.readStatus {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        float: right;
+        background-image: url("../img/square.svg");
+      }
+    }
+  }
+
+  div.readed {
+    background-color: @add_form !important;
+
+    h1 {
+      p.readStatus {
+        background-image: url("../img/check.svg") !important;
+      }
+    }
+  }
+
+}
