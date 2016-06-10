@@ -17,7 +17,8 @@
     <script src="js/misc.js"></script>
     <script src="js/FeedEk.js"></script>
     <script src="js/moment-with-locales.min.js"></script>
-    <script src="js/RSSManager.js"></script>
+    <script src="js/RSSButton.js"></script>
+    <script src="js/RSSCat.js"></script>
     <script src="js/RSSNews.js"></script>
     <script src="js/scripts.js"></script>
     <script src="js/App.js"></script>
@@ -32,10 +33,24 @@
             <div id="addRssFormContainer">
                 <form id="addRssForm" action="#">
                     <h2>Add rssfeed</h2>
+                    <div id="radioContainer" class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary active">
+                            <input id="newRssFeed" type="radio" name="options" value="rss">New RSS feed
+                        </label>
+                        <label class="btn btn-primary">
+                            <input id="newCat" type="radio" name="options" value="cat">New category
+                        </label>
+                    </div>
                     <label for="Name">Name</label>
                     <input id="Name" type="text" name="Name">
-                    <label for="URL">URL</label>
-                    <input id="URL" type="text" name="URL"/>
+                    <div id="rssOption" class="show">
+                        <label for="URL">URL</label>
+                        <input id="URL" type="text" name="URL"/>
+                        <label for="category">Category</label>
+                        <select name="category" id="category" class="form-control">
+                            <option value="noCat" selected>main</option>
+                        </select>
+                    </div>
                     <input type="submit" class="btn submitRss" value="Add">
                 </form>
             </div>
