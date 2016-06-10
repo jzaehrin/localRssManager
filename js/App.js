@@ -16,7 +16,7 @@ App = {
             this.$form.addRss.container.slideUp();
             this.$form.settings.container.slideUp();
 
-            this.loadButtons();
+            this.initDisplay();
 
             this.singleton = true;
         }
@@ -28,6 +28,8 @@ App = {
         addRss:{
             button: null,
             container: null,
+            radio: null,
+            select: null,
             imgOff: "img/signs.svg",
             imgOn: "img/line.svg"
         },
@@ -49,6 +51,7 @@ App = {
         storage: {
             feed: 'rssFeed',
             settings: 'rssSettings',
+            categorieUrl: 'cat',
             defaultSettings: {
                 'count': 5,
                 'limit': 200
@@ -58,30 +61,63 @@ App = {
     },
     /* Initialisation of vars */
     initVars: function(){
-        this.$form.addRss = this.$.extend({}, this.$form.addRss, { button: this.$('#addRssFormButton'), container: this.$('#addRssFormContainer')});
+        this.$form.addRss = this.$.extend({}, this.$form.addRss, { button: this.$('#addRssFormButton'), container: this.$('#addRssFormContainer'),
+                                radio: this.$("#addRssFormContainer input[type='radio'][name='options']"), select: this.$('#category')});
 
         this.$form.settings = this.$.extend({}, this.$form.settings, { button: this.$('#SettingsFormButton'), container: this.$('#SettingsFormContainer')});
 
         this.$container = this.$.extend({}, this.$container, { button: this.$('#btnContainer'), rss: this.$('#rssContainer')})
+    },
+    initDisplay: function (){
+        console.log(this.$form.addRss.select);
+        this.reloadSelector();
+        this.$form.addRss.radio.filter('[value=rss]').attr("checked", true);
+        this.loadButtons();
     },
     /* Initialisation of event for form of settings and adding rss */
     initEvent: function(){
         var self = this;
 
         /* Adding RSS form */
+        this.$form.addRss.radio.change(function (){
+            console.log(this);
+            if(this.value == "cat"){
+                self.FormAction.hideRssOption();
+            }else{
+                self.FormAction.showRssOption();
+            }
+        });
+        /* Submit function */
         this.$form.addRss.container.find('form').submit(function (e){
             var addRss = self.$form.addRss;
             e.preventDefault();
 
             var name = this.elements['Name'].value;
-            var url = this.elements['URL'].value;
 
-            if(url == "" || name == ""){
+            if(this.elements['options'].value == 'cat'){
+                self.localStorage.add_value_in(self.config.storage.feed, [name, self.config.storage.categorieUrl]);
+                self.reloadSelector();
+                self.loadButtons();
+                this.reset();
+                self.$form.addRss.radio.filter('[value=rss]').trigger("change");
                 return false;
             }
+            else {
+                var url = this.elements['URL'].value;
+                var cat = this.elements['category'].value;
 
-            self.localStorage.add_value_in(self.config.storage.feed, [name, url]);
+                if(cat == 'noCat') {
 
+                    if (url == "" || name == "") {
+                        return false;
+                    }
+
+                    console.log(self.localStorage.add_value_in(self.config.storage.feed, [name, url]));
+                }
+                else{
+                    self.localStorage.add_value_in(cat, [name, url]);
+                }
+            }
             self.loadButtons();
             this.reset();
             self.FormAction.closeForm(addRss.button, addRss.container, addRss.imgOff);
@@ -95,6 +131,7 @@ App = {
                 App.FormAction.closeAllForm(self.$form);
                 App.FormAction.hideDeleteRssButton(App.$container.button.find('button'));
                 App.FormAction.openForm(this, App.$form.addRss.container, App.$form.addRss.imgOn);
+                App.reloadSelector();
             }
         });
 
@@ -126,6 +163,18 @@ App = {
                 self.FormAction.showDeleteRssButton(self.$container.button.find('button'));
             }
         });
+    },
+    category: {
+        closeCategory: function(obj, form){
+            $(obj).removeClass('open');
+
+            $(form).slideUp();
+        },
+        openCategory: function(obj, form) {
+            $(obj).addClass('open');
+
+            $(form).slideDown();
+        }
     },
     /* custom localStorage function */
     localStorage: {
@@ -230,11 +279,17 @@ App = {
             list.each(function(){
                 $(this).find('.delete').removeClass('showDelete');
             });
+        },
+        hideRssOption: function(){
+            $('#rssOption').removeClass('show');
+        },
+        showRssOption: function(){
+            $('#rssOption').addClass('show');
         }
     },
     /* loading/reloading of rss buttons */
     loadButtons: function(){
-        console.log(this);
+        var self = this;
         this.$container.button.empty();
 
         var feeds = this.localStorage.get_item(this.config.storage.feed);
@@ -251,9 +306,39 @@ App = {
 
         console.info(feeds);
         this.$(feeds).each( function( i, item ) {
-            var obj = new RSSManager(item[0], item[1], settings);
-            console.info(obj);
+            if(item[1] == self.config.storage.categorieUrl){
+                var items = [];
+                self.$(self.localStorage.get_item(item[0])).each( function(i, item){
+                    items.push([item[0], item[1]]);
+                });
+                console.info(new RSSCat(item[0], items, settings));
+            }
+            else {
+                console.info(new RSSButton(item[0], item[1], settings));
+            }
         });
+    },
+    reloadSelector: function(){
+        var self = this;
+
+        var feeds = this.localStorage.get_item(this.config.storage.feed);
+
+        this.$form.addRss.select.empty();
+
+        var $option = $('<option/>', {
+            value: 'noCat',
+        }).text('main');
+        self.$form.addRss.select.append($option);
+
+        this.$(feeds).each( function(i, item){
+            if(item[1] == self.config.storage.categorieUrl){
+                $option = $('<option/>', {
+                    value: item[0],
+                }).text(item[0]);
+                self.$form.addRss.select.append($option);
+            }
+        })
+
     },
     removeClickedStatus: function() {
         var $buttons = this.$container.button.find('button');

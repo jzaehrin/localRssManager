@@ -4,10 +4,10 @@
  *
  * @param name String; Name gived for the RSS
  * @param url String; URL of the RSS
- * @param options Object; loading options
+ * @param settings Object; loading settings
  *
  */
-var RSSManager = function(name, url, options) {
+var RSSButton = function(name, url, settings) {
 
     this.id = url.crypt();
 
@@ -17,17 +17,18 @@ var RSSManager = function(name, url, options) {
 
     this.App = window.App;
 
-    var defaultOptions = {
+    var defaultSettings = {
         count: "5",
-        limit: "200"
+        limit: "200",
+        container: false
     };
 
-    this.options = $.extend({},defaultOptions, options);
+    this.settings = $.extend({},defaultSettings, settings);
 
     this.init();
 };
 
-RSSManager.prototype = {
+RSSButton.prototype = {
     init: function(){
         var self = this;
 
@@ -45,10 +46,10 @@ RSSManager.prototype = {
             $(this).addClass('clicked');
             self.App.$container.rss.FeedEk({
                 FeedUrl : self.url,
-                MaxCount : self.options['count'],
+                MaxCount : self.settings['count'],
                 ShowDesc : true,
                 ShowPubDate:true,
-                DescCharacterLimit: self.options['limit'],
+                DescCharacterLimit: self.settings['limit'],
                 TitleLinkTarget:'_blank',
                 DateFormat:'DD/MM/YYYY',
                 DateFormatLang:'en',
@@ -56,16 +57,26 @@ RSSManager.prototype = {
             });
         });
 
-        this.App.$container.button.append(this.$btn);
+        if(this.settings.container == false) {
+            this.App.$container.button.append(this.$btn);
+        }
+        else{
+            this.settings.container.append(this.$btn);
+        }
     },
     delete: function(){
         var App = this.App;
         App.$container.rss.empty();
         this.$btn.remove();
-        App.localStorage.remove_item(this.id);
 
-        App.localStorage.remove_value_in(App.config.storage.feed, this.id);
+        App.localStorage.remove_item(this.id);
+        if(this.settings.category == false) {
+            App.localStorage.remove_value_in(App.config.storage.feed, this.id);
+        }
+        else{
+            App.localStorage.remove_value_in(this.settings.category, this.id);
+        }
     }
 };
 
-RSSManager.prototype.constructor = RSSManager;
+RSSButton.prototype.constructor = RSSButton;
