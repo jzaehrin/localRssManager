@@ -33,8 +33,9 @@ RSSButton.prototype = {
         var self = this;
 
         this.$btn = $('<button/>',{
-            class: 'btn btnRss',
-            id: this.id
+            class: 'ui-btn btnRss',
+            id: this.id,
+            'data-rel':"close"
         }).text(this.name).append($('<p/>', {
             class: 'delete'
         }).click(function(){

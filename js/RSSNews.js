@@ -78,6 +78,7 @@ RSSNews.prototype = {
     /* Readed News */
     display_small: function(){
         this.$article.addClass('readed');
+        this.$article.addClass('clr-bg-green');
 
         this.$article.find('.content').remove();
         this.$article.find('.link').remove();
@@ -87,6 +88,7 @@ RSSNews.prototype = {
     /* Total news */
     display_all: function(){
         this.$article.removeClass('readed');
+        this.$article.removeClass('clr-bg-green');
 
         this.$article.append($('<p/>', {
             class: 'content'

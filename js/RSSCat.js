@@ -32,7 +32,7 @@ RSSCat.prototype = {
         var self = this;
 
         this.$btn = $('<button/>',{
-            class: 'btn btnRss cat'
+            class: 'ui-btn btnRss cat'
         }).text(this.name).append($('<p/>', {
             class: 'delete'
         }).click(function(){
